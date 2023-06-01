@@ -1,8 +1,8 @@
 import { Component } from "react";
 import React from "react";
-import "../styles/Contact.css";
+import "../styles/Education.css";
 
-class Contact extends Component {
+class Education extends Component {
     constructor(props) {
         super(props);
 
@@ -60,4 +60,4 @@ class Contact extends Component {
     }
 }
 
-export default Contact;
+export default Education;
