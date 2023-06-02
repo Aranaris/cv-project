@@ -22,18 +22,24 @@ class Education extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (!event.target.key) {
+        let index = event.target.getAttribute("data-key");
+        if (!index) {
             this.addNewEducation(this.state.setSchoolName, this.state.setDegreeName, this.state.setCompletionYear);
             this.setAddMode();
         } else {
+            let updatedEducation = {
+                schoolName: this.state.setSchoolName || this.state.educationList[index].schoolName,
+                degreeName: this.state.setDegreeName || this.state.educationList[index].degreeName,
+                completionYear: this.state.setCompletionYear || this.state.educationList[index].completionYear
+            }
+
+            let newEducationList = this.state.educationList;
+            newEducationList[index] = updatedEducation;
+            this.setState({
+                educationList: newEducationList,
+            })
             this.props.setEditMode();
         }
-        // this.setState({
-        //     this.educationList[index]:
-        //     displayName: this.state.contactName || this.state.displayName,
-        //     displayEmail: this.state.contactEmail || this.state.displayEmail,
-        //     displayPhone: this.state.contactPhone || this.state.displayPhone,
-        // })
     }
 
     handleInputChange(event) {
@@ -74,7 +80,8 @@ class Education extends Component {
                                     <li>Degree: {edInfo.degreeName}</li>
                                     <li>Year: {edInfo.completionYear}</li>
                                 </ul>
-                                {this.props.editMode && (<form onSubmit={this.handleSubmit} key={i}>
+                                {this.props.editMode && (
+                                <form onSubmit={this.handleSubmit} data-key={i}>
                                     <label htmlFor="setSchoolName">School: </label>
                                     <input type="text" name="setSchoolName" onChange={this.handleInputChange}></input><br />
                                     <label htmlFor="setDegreeName">Degree: </label>
@@ -88,7 +95,7 @@ class Education extends Component {
                         )
                     })}
                 </ul>
-                <button onClick={this.setAddMode}>Add</button>
+                {!this.props.editMode && !this.state.addMode && (<button onClick={this.setAddMode}>Add</button>)}
                 {this.state.addMode && (<form onSubmit={this.handleSubmit}>
                     <label htmlFor="setSchoolName">School: </label>
                     <input type="text" name="setSchoolName" onChange={this.handleInputChange}></input><br />
@@ -99,6 +106,7 @@ class Education extends Component {
                     <input type="submit" value="Submit"></input>
                 </form>
                 )}
+                {this.state.addMode &&(<button onClick={this.setAddMode}>Cancel</button>)}
             </div>
         )
     }

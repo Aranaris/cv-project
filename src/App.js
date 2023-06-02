@@ -26,8 +26,8 @@ class App extends Component {
     return (
       <div className="App">
         <Contact editMode={this.state.editMode} setEditMode={this.setEditMode} />
-        <Education editMode={this.state.editMode} setEditMode={this.setEditMode}/>
-        <Work />
+        <Education editMode={this.state.editMode} setEditMode={this.setEditMode} />
+        <Work editMode={this.state.editMode} setEditMode={this.setEditMode} />
         <button onClick={this.setEditMode}>Edit</button>
       </div>
     )
