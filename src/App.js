@@ -8,14 +8,27 @@ import Work from "./components/Work";
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      editMode: false,
+    };
+
+    this.setEditMode = this.setEditMode.bind(this);
+  }
+
+  setEditMode() {
+    this.setState({
+      editMode: !this.state.editMode,
+    });
   }
 
   render() {
     return (
       <div className="App">
-        <Contact />
-        <Education />
+        <Contact editMode={this.state.editMode} setEditMode={this.setEditMode} />
+        <Education editMode={this.state.editMode} setEditMode={this.setEditMode}/>
         <Work />
+        <button onClick={this.setEditMode}>Edit</button>
       </div>
     )
   }

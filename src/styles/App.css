@@ -7,21 +7,20 @@ ul, li {
   padding-left: 0;
 }
 
+ul {
+  margin-bottom: 20px;
+}
+
 .info-section {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button, input {
+  max-width: min-content;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .App-header {
@@ -35,15 +34,3 @@ ul, li {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

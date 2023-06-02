@@ -21,6 +21,7 @@ class Contact extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        this.props.setEditMode();
         this.setState({
             displayName: this.state.contactName || this.state.displayName,
             displayEmail: this.state.contactEmail || this.state.displayEmail,
@@ -46,7 +47,7 @@ class Contact extends Component {
                     <li>E-mail: {this.state.displayEmail}</li>
                     <li>Phone: {this.state.displayPhone}</li>
                 </ul>
-                <form onSubmit={this.handleSubmit}>
+                {this.props.editMode && (<form onSubmit={this.handleSubmit}>
                     <label htmlFor="contactName">Name: </label>
                     <input type="text" name="contactName" placeholder={this.state.displayName} onChange={this.handleInputChange}></input><br />
                     <label htmlFor="contactEmail">E-mail: </label>
@@ -54,7 +55,7 @@ class Contact extends Component {
                     <label htmlFor="contactPhone">Phone: </label>
                     <input type="tel" name="contactPhone" placeholder={this.state.displayPhone} onChange={this.handleInputChange}></input><br />
                     <input type="submit" value="Submit"></input>
-                </form>
+                </form>)}
             </div>
         )
     }

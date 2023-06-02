@@ -7,25 +7,33 @@ class Education extends Component {
         super(props);
 
         this.state = {
-            contactName: "",
-            contactEmail: "",
-            contactPhone: "",
-            displayName: "test name",
-            displayEmail: "email@example.com",
-            displayPhone: "1234567890",
+            setSchoolName: "",
+            setDegreeName: "",
+            setCompletionYear: "",
+            educationList: [],
+            addMode: false,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.addNewEducation = this.addNewEducation.bind(this);
+        this.setAddMode = this.setAddMode.bind(this);
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        this.setState({
-            displayName: this.state.contactName || this.state.displayName,
-            displayEmail: this.state.contactEmail || this.state.displayEmail,
-            displayPhone: this.state.contactPhone || this.state.displayPhone,
-        })
+        if (!event.target.key) {
+            this.addNewEducation(this.state.setSchoolName, this.state.setDegreeName, this.state.setCompletionYear);
+            this.setAddMode();
+        } else {
+            this.props.setEditMode();
+        }
+        // this.setState({
+        //     this.educationList[index]:
+        //     displayName: this.state.contactName || this.state.displayName,
+        //     displayEmail: this.state.contactEmail || this.state.displayEmail,
+        //     displayPhone: this.state.contactPhone || this.state.displayPhone,
+        // })
     }
 
     handleInputChange(event) {
@@ -37,24 +45,60 @@ class Education extends Component {
         })
     }
 
+    addNewEducation(school, degree, completionYear) {
+        this.setState({
+            educationList: this.state.educationList.concat([{
+                schoolName: school,
+                degreeName: degree,
+                completionYear: completionYear,
+            }])
+        })
+    }
+
+    setAddMode() {
+        this.setState({
+            addMode: !this.state.addMode,
+        })
+    }
+
     render() {
         return (
             <div className="info-section">
-                <h3>Contact Info</h3>
+                <h3>Education Info</h3>
                 <ul>
-                    <li>Name: {this.state.displayName}</li>
-                    <li>E-mail: {this.state.displayEmail}</li>
-                    <li>Phone: {this.state.displayPhone}</li>
+                    {this.state.educationList.map((edInfo, i) => {
+                        return (
+                            <li key={i}>
+                                <ul>
+                                    <li>School: {edInfo.schoolName}</li>
+                                    <li>Degree: {edInfo.degreeName}</li>
+                                    <li>Year: {edInfo.completionYear}</li>
+                                </ul>
+                                {this.props.editMode && (<form onSubmit={this.handleSubmit} key={i}>
+                                    <label htmlFor="setSchoolName">School: </label>
+                                    <input type="text" name="setSchoolName" onChange={this.handleInputChange}></input><br />
+                                    <label htmlFor="setDegreeName">Degree: </label>
+                                    <input type="text" name="setDegreeName" onChange={this.handleInputChange}></input><br />
+                                    <label htmlFor="setCompletionYear">Year of Completion: </label>
+                                    <input type="number" name="setCompletionYear" onChange={this.handleInputChange}></input><br />
+                                    <input type="submit" value="Submit"></input>
+                                </form>
+                                )}
+                            </li>
+                        )
+                    })}
                 </ul>
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="contactName">Name: </label>
-                    <input type="text" name="contactName" placeholder={this.state.displayName} onChange={this.handleInputChange}></input><br />
-                    <label htmlFor="contactEmail">E-mail: </label>
-                    <input type="email" name="contactEmail" placeholder={this.state.displayEmail} onChange={this.handleInputChange}></input><br />
-                    <label htmlFor="contactPhone">Phone: </label>
-                    <input type="tel" name="contactPhone" placeholder={this.state.displayPhone} onChange={this.handleInputChange}></input><br />
+                <button onClick={this.setAddMode}>Add</button>
+                {this.state.addMode && (<form onSubmit={this.handleSubmit}>
+                    <label htmlFor="setSchoolName">School: </label>
+                    <input type="text" name="setSchoolName" onChange={this.handleInputChange}></input><br />
+                    <label htmlFor="setDegreeName">Degree: </label>
+                    <input type="text" name="setDegreeName" onChange={this.handleInputChange}></input><br />
+                    <label htmlFor="setCompletionYear">Year of Completion: </label>
+                    <input type="number" name="setCompletionYear" onChange={this.handleInputChange}></input><br />
                     <input type="submit" value="Submit"></input>
                 </form>
+                )}
             </div>
         )
     }
